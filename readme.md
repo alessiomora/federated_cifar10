@@ -1,6 +1,6 @@
 **Federated Cifar10**
 
-This repository contains Tensoflow Code to generate (and save on
+This repository contains Tensoflow code to generate (and save on
 disk) a Federated version of Cifar10.
 
 The Cifar10 dataset is partitioned following the paper [Measuring the Effects of Non-Identical Data
