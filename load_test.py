@@ -16,7 +16,7 @@ def load_client_datasets_from_files():
     #         lambda element: (tf.expand_dims(element['pixels'], -1), element['label'])).batch(
     #         application_paramaters.TEST_BATCH_SIZE, drop_remainder=False)
 
-    path = os.path.join(".", "cifar10_datasets_1.0/train")
+    path = os.path.join(".", "cifar10_datasets_sattler_100/train")
     sampled_clients = np.random.choice(
         os.listdir(path),  # 3400
         size=1,
@@ -40,14 +40,17 @@ i = 0
 for example, label in iterator:
     # print(example)
     # print(tf.squeeze(label))
-    ax = plt.subplot(25, 20, i+1)
-    plt.imshow(example.numpy().astype("uint8"))
+    # ax = plt.subplot(25, 20, i+1)
+    # plt.imshow(example.numpy().astype("uint8"))
+    # if i==0:
+    #     print(example.numpy())
     # plt.title(class_names[int(result[i])])
-    plt.title(label.numpy().astype("uint8"))
-    plt.axis("off")
-    i = i+1
-plt.show()
+    # plt.title(label.numpy().astype("uint8"))
+    print(label.numpy().astype("uint8"))
+    # plt.axis("off")
+    # i = i+1
+# plt.show()
 
-path = os.path.join(".", "cifar10_datasets_1.0/distribution.npy")
-smpls_loaded = np.load(path)
-print(smpls_loaded)
+# path = os.path.join(".", "cifar10_datasets_1.0/distribution.npy")
+# smpls_loaded = np.load(path)
+# print(smpls_loaded)

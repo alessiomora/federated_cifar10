@@ -3,6 +3,7 @@ import tensorflow_probability as tfp
 import numpy as np
 import os
 
+
 def generate_dataset_by_dirichlet_distrib(num_classes, concentration, num_of_clients,
                                           num_of_examples_per_client):
     tfd = tfp.distributions
@@ -22,9 +23,10 @@ def generate_dataset_by_dirichlet_distrib(num_classes, concentration, num_of_cli
     smpls_integer = tf.cast(tf.round(samples * num_of_examples_per_client), tf.int32)
     return smpls_integer
 
-concentration=0.1
-smpls = generate_dataset_by_dirichlet_distrib(num_classes=10, concentration=concentration, num_of_clients=100,
-                                              num_of_examples_per_client=500)
+
+concentration = 1000.0
+smpls = generate_dataset_by_dirichlet_distrib(num_classes=10, concentration=concentration, num_of_clients=20,
+                                              num_of_examples_per_client=2500)
 print(smpls)
 # print(tf.reduce_sum(smpls, axis = 1))
 
@@ -80,11 +82,13 @@ for per_client_sample in smpls:
     numpy_dataset_x = x_train[list_extracted_all_labels]
 
     ds = tf.data.Dataset.from_tensor_slices((numpy_dataset_x, numpy_dataset_y))
+    ds = ds.shuffle(buffer_size=4096)
     # print(ds)
-    tf.data.experimental.save(ds, path=os.path.join(os.path.join("cifar10_datasets_"+str(concentration), "train"), str(c)))
+    tf.data.experimental.save(ds, path=os.path.join(os.path.join("cifar10_datasets_sattler_" + str(concentration), "train"),
+                                                    str(c)))
     c = c + 1
 
-path = os.path.join("cifar10_datasets_"+str(concentration), "distribution.npy")
+path = os.path.join("cifar10_datasets_sattler_" + str(concentration), "distribution.npy")
 np.save(path, smpls.numpy())
 smpls_loaded = np.load(path)
 print(smpls_loaded)
